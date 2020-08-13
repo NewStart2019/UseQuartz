@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 指定全局配置文件，下面可以通过占位符的形式读取 -->
+    <properties resource="db.properties"/>
+    <!-- 用于指定数据源驱动包（jar或者zip）的绝对路径，具体选择什么驱动包取决于连接什么类型的数据源。 -->
+    <classPathEntry location="${jdbc.jar.path}"/>
+    <!-- 用于运行时的解析模式和具体的代码生成行为-->
+    <context id="generator" targetRuntime="MyBatis3DynamicSql">
+        <!-- 是否去除自动生成的注释,在注释中添加生成的时间戳 true：是 ： false:否 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--指定数据源的连接信息-->
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
+                        password="${jdbc.password}" userId="${jdbc.username}"/>
+
+        <!-- 解析和计算数据库列类型和Java类型的映射关系-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--控制实体（Model）类的代码生成行为
+                targetPackage：生成的实体类的包名 eg：club.throwable.model
+                targetProject：生成的实体类文件相对于项目（根目录）的位置：src/main/java
+        -->
+        <javaModelGenerator targetPackage="com.zqh.usequartz.repository.entity" targetProject="src/main/java">
+            <!-- 是否允许通过Schema生成子包-->
+            <property name="enableSubPackages" value="true" />
+            <!--Setter方法是否对字符串类型进行一次trim操作-->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--主要用于控制 XML映射文件 的代码生成行为-->
+        <!--targetPackage：生成的XML映射文件的包名-->
+        <!--targetProject：生成的XML映射文件相对于项目（根目录）的位置-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="com.zqh.usequartz.repository.mapper"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="t_order"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               domainObjectName="Order"
+               mapperName="OrderMapper">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>
+    </context>
+</generatorConfiguration>
